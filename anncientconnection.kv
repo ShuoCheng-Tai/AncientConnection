@@ -1,0 +1,73 @@
+<ACGrid>:
+
+    test2: test2
+    test1: test1
+    dna: dna
+
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.width - 200, root.height -100
+        pos: 100, 100
+
+
+        FloatLayout:
+            
+            Button:
+                text: "Submit"
+                size_hint: (.15, .1)
+                size: root.width * 0.2, root.height * 0.1
+                pos_hint: {'right': 1, 'center_y': 0.7}
+                on_press: root.btn()
+                
+            Spinner:
+                id: test2
+                text: 'User 2'
+                values: ['Test 1', 'Test 2', 'Test 3', 'Test 4', 'Test 5']
+                size_hint: (.2, .1)
+                size: 150, 50
+                pos_hint: {'right': 0.75, 'center_y': 0.7}
+
+            Spinner:
+                id: test1
+                text: 'User 1'
+                values: ['Test 1', 'Test 2', 'Test 3', 'Test 4', 'Test 5']
+                size_hint: (.2, .1)
+                size: 150, 50
+                pos_hint: {'right': 0.5, 'center_y': 0.7}
+
+            Spinner:
+                id: dna
+                text: 'mtDNA / Y DNA'
+                values: ['mtDNA', 'Y DNA']
+                size_hint: (.2, .1)
+                size: 150, 50
+                pos_hint: {'right': 0.25, 'center_y': 0.7}
+
+
+        GridLayout:
+            cols: 3
+
+            Label:
+                text: "Information"
+                pos_hint:{'y': 0.5}
+
+            Label:
+                text: "Description"
+                pos_hint:{'y': 0.5}
+
+            Label:
+                text: "Connection"
+                pos_hint:{'y': 0.5}
+
+
+        GridLayout:
+            cols: 1
+
+            size_hint: None, None
+            size: self.minimum_size
+
+            Label:
+                text: "Timeline"
+                size_hint: None, None
+                size: self.texture_size
+                pos_hint: {'center_x': 1, 'center_y': 1}
