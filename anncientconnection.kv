@@ -7,67 +7,125 @@
     BoxLayout:
         orientation: 'vertical'
         size: root.width - 200, root.height -100
-        pos: 100, 100
+        pos: 100, 20
 
+        canvas:
+            Color:
+                rgba: 0, 0, 0, 1
+            Line:
+                rectangle: self.x, self.y, self.width, self.height
+                width: 1
+                
 
         FloatLayout:
-            
+            size_hint_y: 0.15
+
+            canvas:
+                Color:
+                    rgba: 1, 0, 0, 1
+                Line:
+                    rectangle: self.x, self.y, self.width, self.height
+                    width: 1
+
             Button:
                 text: "Submit"
-                size_hint: (.15, .1)
-                size: root.width * 0.2, root.height * 0.1
-                pos_hint: {'right': 1, 'center_y': 0.7}
+                size_hint: (.15, 1)
+
+                pos_hint: {'center_x': 0.9, 'center_y': 0.5}
                 on_press: root.btn()
                 
             Spinner:
                 id: test2
-                text: 'User 2'
-                values: ['Test 1', 'Test 2', 'Test 3', 'Test 4', 'Test 5']
-                size_hint: (.2, .1)
-                size: 150, 50
-                pos_hint: {'right': 0.75, 'center_y': 0.7}
+                text: 'Person 2'
+                values: []
+                size_hint: (.2, 1)
+
+                pos_hint: {'center_x': 0.65, 'center_y': 0.5}
 
             Spinner:
                 id: test1
-                text: 'User 1'
-                values: ['Test 1', 'Test 2', 'Test 3', 'Test 4', 'Test 5']
-                size_hint: (.2, .1)
-                size: 150, 50
-                pos_hint: {'right': 0.5, 'center_y': 0.7}
+                text: 'Person 1'
+                values: []
+                size_hint: (.2, 1)
+
+                pos_hint: {'center_x': 0.40, 'center_y': 0.5}
 
             Spinner:
                 id: dna
                 text: 'mtDNA / Y DNA'
                 values: ['mtDNA', 'Y DNA']
-                size_hint: (.2, .1)
-                size: 150, 50
-                pos_hint: {'right': 0.25, 'center_y': 0.7}
+                size_hint: (.2, 1)
+
+                pos_hint: {'center_x': 0.15, 'center_y': 0.5}
 
 
         GridLayout:
             cols: 3
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            canvas:
+                Color:
+                    rgba: 0, 1, 0, 1
+                Line:
+                    rectangle: self.x, self.y, self.width, self.height
+                    width: 1
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_x: 0.6
+                canvas:
+                    Color:
+                        rgba: 0, 1, 0, 1
+                    Line:
+                        rectangle: self.x, self.y, self.width, self.height
+                        width: 1
+                Label:
+                    text: "Person 2\nName\nTime"
+                Label:
+                    text: "Shared Ancestor"
+                Label:
+                    text: "Shared Connection"
 
             Label:
-                text: "Information"
-                pos_hint:{'y': 0.5}
-
-            Label:
+                size_hint_x: 1.1
+                canvas:
+                    Color:
+                        rgba: 0, 1, 0, 1
+                    Line:
+                        rectangle: self.x, self.y, self.width, self.height
+                        width: 1
                 text: "Description"
-                pos_hint:{'y': 0.5}
 
-            Label:
-                text: "Connection"
-                pos_hint:{'y': 0.5}
-
+            Image:
+                size_hint_x: 0.7
+                canvas:
+                    Color:
+                        rgba: 0, 1, 0, 1
+                    Line:
+                        rectangle: self.x, self.y, self.width, self.height
+                        width: 1
+                source: 'seiko_lede-2880x1620.jpg'
+                size_hint: 1 ,1
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
         GridLayout:
             cols: 1
+            size_hint: (1, 1)
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
-            size_hint: None, None
-            size: self.minimum_size
+            canvas:
+                Color:
+                    rgba: 0, 0, 1, 1
+                Line:
+                    rectangle: self.x, self.y, self.width, self.height
+                    width: 1
 
             Label:
                 text: "Timeline"
                 size_hint: None, None
                 size: self.texture_size
                 pos_hint: {'center_x': 1, 'center_y': 1}
+
+            Image:
+                source: 'seiko_lede-2880x1620.jpg'
+                size_hint: 1 ,1
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
