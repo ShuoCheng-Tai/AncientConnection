@@ -398,10 +398,10 @@ class ACGrid(Widget):
 
 
 # Execute the App
-class AnncientConnectionApp(App):
+class AncientConnectionApp(App):
     def build(self):
         Window.clearcolor = (.245, .245, .220, 0.5) # Set the App background color
         return ACGrid()
     
 if __name__ == "__main__":
-    AnncientConnectionApp().run()
+    AncientConnectionApp().run()
