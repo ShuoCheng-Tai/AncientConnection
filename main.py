@@ -8,10 +8,10 @@ import kivy
 kivy.require('2.3.0') # Set up minimum version requirement
 from kivy.app import App
 from kivy.config import Config
-Config.set('graphics', 'resizable', False) #
+Config.set('graphics', 'resizable', False) # Window Size is fixed
 from kivy.core.window import Window
-from kivy.uix.label import Label
 from kivy.uix.widget import Widget
+from kivy.uix.label import Label
 
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
@@ -21,14 +21,12 @@ from kivy.uix.button import Button
 from kivy.uix.spinner import Spinner
 from kivy.uix.dropdown import DropDown
 
-from kivy.uix.textinput import TextInput
 from kivy.properties import ObjectProperty
 from kivy.uix.popup import Popup
 from kivy.uix.image import Image
 
-
-import pandas as pd
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 
 
@@ -43,10 +41,6 @@ import plot_timeline_7
 
 ####################################################################################################
 
-# Set file path to directories
-main_directory = os.getcwd()
-
-
 # TestUser Directory, from Names of Testers to files
 files = os.listdir("./TestUsers")
 tester_file = [file for file in files if re.match(r"Test\d+.txt", file) and "DNA" not in file and file.endswith(".txt")] ## Search files that Match Test*.txt, but No "DNA" in it
@@ -57,7 +51,7 @@ tester_library = {name: file for name, file in zip(tester_name, sorted_files)} #
 
 # Extract data from Excel sheet
 df = pd.read_excel('./AADR_54.1/AADR Annotation.xlsx')
-# For Plot images
+# For Flag images
 flags = os.listdir("./flags")
 
 ####################################################################################################
@@ -121,18 +115,19 @@ class ACGrid(Widget):
 
     # Print out information
         ## tester_info_5.py, Extract infomation of Testers and Ancestor to print and plot on screen
-        master_ID_p1, date_p1, era_p1, death_p1, locality_p1, country_p1, sex_p1, group_p1 = tester_info_5.tester_info(self.info_p1)
-        master_ID_p2, date_p2, era_p2, death_p2, locality_p2, country_p2, sex_p2, group_p2 = tester_info_5.tester_info(self.info_p2)
-        master_ID_anc, date_anc, era_anc, death_anc, locality_anc, country_anc, sex_anc, group_anc = tester_info_5.tester_info(self.info_anc)
+        master_ID_p1, date_p1, era_p1, death_p1, locality_p1, country_p1, sex_p1, group_p1, period_p1 = tester_info_5.tester_info(self.info_p1)
+        master_ID_p2, date_p2, era_p2, death_p2, locality_p2, country_p2, sex_p2, group_p2, period_p2 = tester_info_5.tester_info(self.info_p2)
+        master_ID_anc, date_anc, era_anc, death_anc, locality_anc, country_anc, sex_anc, group_anc, period_anc = tester_info_5.tester_info(self.info_anc)
 
+        # Initial values for connections (Not yet finished)
         connection_count = 0000
         customer_count = 000
 
-        # Information for
+        # Information for text
         person_p2, pronoun_p2, pronoun_low_p2, sex_p2 = tester_info_5.info_translate(sex_p2)
         person_anc, pronoun_anc, pronoun_low_anc, sex_anc = tester_info_5.info_translate(sex_anc) 
 
-        ### Print on "Person 2 Label"
+        ### Print flags on "Person 2 Label"
         self.ids.p2_label.text = f"[b][size=30]{master_ID_p2}\n[size=25][/b]{date_p2} {era_p2}\nSex: {sex_p2}"
         if ' ' in country_p2:
             country_p2 = country_p2.replace(' ', '_')
@@ -143,6 +138,7 @@ class ACGrid(Widget):
         #### Set "Person 2 Label" p2_label as a parent widget for "Flag"
         parent_widget = self.ids.p2_label.parent
         existing_flag_widget = self.ids.flag
+        # Renew flags when user resubmit new testers
         if existing_flag_widget:
             self.ids.flag.source=f'./flags/{flag_name}'
         else:
@@ -160,7 +156,7 @@ class ACGrid(Widget):
         self.ids.share_label.halign = 'left'
 
         ### Print on "Description Label"
-        self.ids.description_label.text = f"[size=25][b]{master_ID_p2}[/b] was a {person_p2} who lived between [b]{date_p2} {era_p2}[/b] and was found in the region now known as [b]{locality_p2}[/b].\n\n{pronoun_p2} was associate with the [b]{group_p2}[/b] cultural group."
+        self.ids.description_label.text = f"[size=25][b]{master_ID_p2}[/b] was a {person_p2} who lived between [b]{period_p2} {era_p2}[/b] and was found in the region now known as [b]{locality_p2}[/b].\n\n{pronoun_p2} was associate with the [b]{group_p2}[/b] cultural group."
         self.ids.description_label.height = self.ids.description_label.texture_size[1]
         self.ids.description_label.halign = 'left'
         self.ids.description_label.padding = [20, 0] # move the full text to (20) right
@@ -222,8 +218,8 @@ class ACGrid(Widget):
         self.DNA_tree, self.main_DNA_type, self.sec_DNA_type, self.DNA_sec_col, self.DNA_main_col, self.DNA_ISOGG_col, self.anc_line, self.sec_col = variables_1.variables(self.dna.text, df)
 
         ## read_Tester_IDs_2.py, Read Testers' IDs from mtDNA and Y DNA in .txt file, create 'Matching rows index'
-        self.main_ID_p1, self.sec_ID_p1, self.p1_row_nums = read_Tester_IDs_2.read_Tester_IDs(file1_path, self.DNA_main_col, self.DNA_sec_col, self.main_DNA_type, self.sec_DNA_type)
-        self.main_ID_p2, self.sec_ID_p2, self.p2_row_nums = read_Tester_IDs_2.read_Tester_IDs(file2_path, self.DNA_main_col, self.DNA_sec_col, self.main_DNA_type, self.sec_DNA_type)
+        self.main_ID_p1, self.sec_ID_p1, self.p1_row_nums = read_Tester_IDs_2.read_Tester_IDs(file1_path, self.DNA_main_col, self.DNA_sec_col, self.DNA_ISOGG_col, self.main_DNA_type, self.sec_DNA_type)
+        self.main_ID_p2, self.sec_ID_p2, self.p2_row_nums = read_Tester_IDs_2.read_Tester_IDs(file2_path, self.DNA_main_col, self.DNA_sec_col, self.DNA_ISOGG_col, self.main_DNA_type, self.sec_DNA_type)
         
         ## match_ID_3.py, Read the EXCEL information to decide which Main ID is the best to use, by first checking Secondary ID
         self.info_p1, match_rows_p1, backup_rows_p1, error_rows_p1 = match_ID_3.extract_info_from_excel(self.p1_row_nums, df, self.dna.text, self.sec_ID_p1, self.sec_col)
@@ -289,6 +285,7 @@ class ACGrid(Widget):
             popup.open()
             
             return
+        
         # return to "choose_ID_p1" and "choose_ID_p2" above
 
 ################################################## if info_P1 and info_P2 don't need to select value ##################################################
@@ -324,9 +321,9 @@ class ACGrid(Widget):
 
     # Print out information
         ## tester_info_5.py, Extract infomation of Testers and Ancestor to print and plot on screen
-        master_ID_p1, date_p1, era_p1, death_p1, locality_p1, country_p1, sex_p1, group_p1 = tester_info_5.tester_info(self.info_p1)
-        master_ID_p2, date_p2, era_p2, death_p2, locality_p2, country_p2, sex_p2, group_p2 = tester_info_5.tester_info(self.info_p2)
-        master_ID_anc, date_anc, era_anc, death_anc, locality_anc, country_anc, sex_anc, group_anc = tester_info_5.tester_info(self.info_anc)
+        master_ID_p1, date_p1, era_p1, death_p1, locality_p1, country_p1, sex_p1, group_p1, period_p1 = tester_info_5.tester_info(self.info_p1)
+        master_ID_p2, date_p2, era_p2, death_p2, locality_p2, country_p2, sex_p2, group_p2, period_p2 = tester_info_5.tester_info(self.info_p2)
+        master_ID_anc, date_anc, era_anc, death_anc, locality_anc, country_anc, sex_anc, group_anc, period_anc = tester_info_5.tester_info(self.info_anc)
 
         connection_count = 0000
         customer_count = 000
@@ -363,7 +360,7 @@ class ACGrid(Widget):
         self.ids.share_label.halign = 'left'
 
         ### Print on "Description Label"
-        self.ids.description_label.text = f"[size=25][b]{master_ID_p2}[/b] was a {person_p2} who lived between [b]{date_p2} {era_p2}[/b] and was found in the region now known as [b]{locality_p2}[/b].\n\n{pronoun_p2} was associate with the [b]{group_p2}[/b] cultural group."
+        self.ids.description_label.text = f"[size=25][b]{master_ID_p2}[/b] was a {person_p2} who lived between [b]{period_p2} {era_p2}[/b] and was found in the region now known as [b]{locality_p2}[/b].\n\n{pronoun_p2} was associate with the [b]{group_p2}[/b] cultural group."
         self.ids.description_label.height = self.ids.description_label.texture_size[1]
         self.ids.description_label.halign = 'left'
         self.ids.description_label.padding = [20, 0] # move the full text to (20) right
@@ -377,8 +374,7 @@ class ACGrid(Widget):
         connect_parent_widget = self.ids.share_label.parent
         existing_connect_widget = self.ids.connection
         if existing_connect_widget:
-            connection_plot_6.connection_plot(self.info_anc, self.info_p1, self.info_p2)
-            self.ids.connection.source=f'./plot/connection.png'
+            self.ids.connection.source=f'./flags/{flag_name}'
         else:
             connect_image = Image(source=f'./plot/connection.png', size_hint=(1, 1))
             connect_parent_widget.add_widget(connect_image)

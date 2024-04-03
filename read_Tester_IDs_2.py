@@ -8,10 +8,10 @@ from kivy.uix.popup import Popup
 from kivy.uix.button import Button
 
 ## read the Tester's mtDNA and Y DNA IDs
-                    # File, Column to check
-def read_Tester_IDs(file_path, DNA_main_col, DNA_sec_col, main_DNA_type, sec_DNA_type):
+                    #  File  ,    Columns to check
+def read_Tester_IDs(file_path, DNA_main_col, DNA_sec_col, DNA_ISOGG_col, main_DNA_type, sec_DNA_type):
     with open(file_path, "r") as f:
-        for line in f:
+        for line in f: # Read DNA ID from Tester file
             if main_DNA_type in line:
                 main_ID = line.split(main_DNA_type)[1].strip()
             if sec_DNA_type in line:
@@ -27,11 +27,15 @@ def read_Tester_IDs(file_path, DNA_main_col, DNA_sec_col, main_DNA_type, sec_DNA
     
         return None, None, []
 
-    # Get "Row Numbers" based on DNA type and IDs
+    # Get "Row Index Numbers" based on DNA type and IDs
     row_nums = [index for index in DNA_main_col.loc[DNA_main_col == main_ID].index]
     row_backup_nums = [index for index in DNA_sec_col.loc[DNA_sec_col == sec_ID].index]
-    
     if len(row_nums) == 0:
         row_nums = row_backup_nums
+    
+    if main_DNA_type == "Y:":
+        row_ISOGG_nums = [index for index in DNA_ISOGG_col.loc[DNA_ISOGG_col == sec_ID].index]
+        if sec_ID is not None and len(row_ISOGG_nums) != 0:
+            row_nums = row_ISOGG_nums
 
     return main_ID, sec_ID, row_nums

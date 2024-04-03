@@ -10,12 +10,12 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 ## Adjust the Year to fit on map
 def date_adjust(Date):
     Date_ad = Date
-    if Date < 0:
-        if -5000 <= Date:
+    if Date < 0: # Years in BCE need adjustment
+        if -5000 <= Date: # -250 = 2500 BCE, -500 = 5000 BCEs
             Date_ad = Date / 10
-        elif -10000 <= Date < -5000: 
+        elif -10000 <= Date < -5000: # -750 = 10000 BCE
             Date_ad = (Date + 5000) / 20 - 500
-        elif Date < -10000:
+        elif Date < -10000: # Years before 10000 BCE -> -800
             Date_ad = -800
     return Date_ad
 
@@ -95,7 +95,6 @@ def plot_timeline(info_p1, info_p2, info_anc):
 
     # Adjust the date to fit in the main plot, X-AXIS
     Date_anc = date_adjust(Date_anc)
-    print(Date_anc)
     Date_p1 = date_adjust(Date_p1)
     Date_p2 = date_adjust(Date_p2)
     # Set the longitude as Y-AXIS
@@ -149,6 +148,10 @@ def plot_timeline(info_p1, info_p2, info_anc):
                            fontsize=20, ha='center', va='center', color='black',
                            bbox=dict(boxstyle='round,pad=0.2', fc='white', alpha=0.8))
 
+    # Set the x-axis limits and ticks for the bottom subplot, same as main plot
+    ax_bottom.set_xlim(start_year - 100, end_year + 100)
+    ax_bottom.set_xticks(tick_positions)
+
     # Bottom plot on the Timeline, remove label
     ax_bottom.set_xticklabels([''] * len(tick_positions))
     ax_bottom.plot(years, np.zeros_like(years), color='k') # Plot the timeline in the bottom subplot
@@ -156,11 +159,6 @@ def plot_timeline(info_p1, info_p2, info_anc):
     # Remove y-axis ticks and labels for the bottom subplot
     ax_bottom.set_yticks([])
     ax_bottom.set_yticklabels([])
-
-    # Set the x-axis limits and ticks for the bottom subplot, same as main plot
-    ax_bottom.set_xlim(start_year - 100, end_year + 100)
-    ax_bottom.set_xticks(tick_positions)
-
 
     # Save the plot as an image file
     plt.grid(True)

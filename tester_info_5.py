@@ -13,19 +13,20 @@ def tester_info(info):
     if date < 0:
         date = -date
         era = "BCE"
-    if int(info.iloc[8]) == 0:
-        date = int(info.iloc[10]) # era = present
+    if int(info.iloc[8]) == 0: # era = present
+        date = int(info.iloc[10]) 
         era = ""
         if re.search(r'\(.*?\)', date):
-            date = re.search(r'([\w\s-]+) \(.*?\)', date).group(1) # Get years, xxxx - xxxx
+            date = re.search(r'(\d+-\d+)', date).group(1) # Get years, xxxx - xxxx
 
+    period = re.search(r'(\d+-\d+)', info.iloc[10]).group(1)
     death = info.iloc[11]
     group = info.iloc[12]
     locality = info.iloc[13]
     country = info.iloc[14]
     sex = info.iloc[23]
 
-    return master_ID, date, era, death, locality, country, sex, group
+    return master_ID, date, era, death, locality, country, sex, group, period
 
 ## Use in "Description Label"
 def info_translate(sex):

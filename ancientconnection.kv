@@ -1,0 +1,170 @@
+<ACGrid>:
+
+    test2: test2
+    test1: test1
+    dna: dna
+    flag: flag
+    connection: connection
+    timeline: timeline
+    
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.width - 200, root.height -100
+        pos: 100, 20
+
+
+        FloatLayout:
+            size_hint_y: 0.25
+
+            Button:
+                text: "Submit"
+                size_hint: (.15, .6)
+                pos_hint: {'center_x': 0.9, 'center_y': 0.5}
+                on_press: root.submitBtn()
+                color: 1, 1, 1, 1
+                background_color: 0.8, 0.8, 0.8, 1
+                
+            Spinner:
+                id: test2
+                text: 'Person 2'
+                values: []
+                size_hint: (.2, .6)
+                pos_hint: {'center_x': 0.65, 'center_y': 0.5}
+                color: 1, 1, 1, 1
+                background_color: 0.8, 0.8, 0.8, 1
+
+            Spinner:
+                id: test1
+                text: 'Person 1'
+                values: []
+                size_hint: (.2, .6)
+                pos_hint: {'center_x': 0.40, 'center_y': 0.5}
+                color: 1, 1, 1, 1
+                background_color: 0.8, 0.8, 0.8, 1
+
+            Spinner:
+                id: dna
+                text: 'mtDNA / Y DNA'
+                values: ['mtDNA', 'Y DNA']
+                size_hint: (.2, .6)
+                pos_hint: {'center_x': 0.15, 'center_y': 0.5}
+                color: 1, 1, 1, 1
+                background_color: 0.8, 0.8, 0.8, 1
+
+
+        GridLayout:
+            cols: 3
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_x: 0.6
+
+
+                GridLayout:
+                    size_hint_y: 0.9
+                    cols: 2  # Two columns for Label and Image
+
+                    Label:
+                        id: p2_label
+                        text: "Person 2"
+                        color: 0, 0, 0, 1
+                        text_size: self.size
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                        markup: True
+                        halign: 'center'
+                        valign: 'middle'
+                        height: self.texture_size[1]
+
+                    Image:
+                        id: flag
+                        size_hint: 0.2, 0.2
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                        
+
+                Label:
+                    id: ancestor_label
+                    size_hint_y: 1.15
+                    width: self.width
+                    text: "Shared Ancestor"
+                    color: 0, 0, 0, 1
+                    text_size: self.size
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    markup: True
+                    halign: 'center'
+                    valign: 'middle'
+                    height: self.texture_size[1]
+
+                    canvas:
+                        Color:
+                            rgba: 0.5, 0.5, 0.5, 1
+                        Line:
+                            points: self.center_x - self.width/2, self.top, self.center_x + self.width/2, self.top # Line on top
+                            width: 2
+                        Line:
+                            points: self.center_x - self.width/2, self.y, self.center_x + self.width/2, self.y  # Line on bottom
+                            width: 2
+
+
+                Label:
+                    id: share_label
+                    width: self.width
+                    text: "Shared Connection"
+                    color: 0, 0, 0, 1
+                    text_size: self.size
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    markup: True
+                    halign: 'center'
+                    valign: 'middle'
+                    height: self.texture_size[1]
+
+
+            Label:
+                id: description_label
+                text: "Description of Shared Ancestor"
+                color: 0, 0, 0, 1
+                text_size: self.size
+                size_hint_x: 1
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                markup: True
+                halign: 'center'
+                valign: 'middle'
+                height: self.texture_size[1]
+
+
+            Image:
+                id: connection
+                size_hint_x: 0.7
+                size_hint: 1 ,1
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+
+
+        GridLayout:
+            cols: 1
+            size_hint: (1, 1)
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            Label:
+                id: time_label
+                text: "Timeline"
+                size_hint: None, None
+                size: self.texture_size
+                pos_hint: {'center_x': 1, 'center_y': 1}
+                color: 0, 0, 0, 1
+
+            BoxLayout:
+                orientation: 'vertical'
+
+                Image:
+                    id: timeline
+                    size_hint: 1, 1
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
